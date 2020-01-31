@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.lifecycle.ViewModelProviders;
@@ -27,8 +28,8 @@ public class AuthActivity extends DaggerAppCompatActivity {
     public static final String INTENT_MESSAGE_AUTH_TYPE_RESTAURANT = "auth type restaurant";
     public static final String INTENT_MESSAGE_AUTH_TYPE_USER = "auth type user";
 
-    private TextView textViewEmail;
-    private TextView textViewPassword;
+    private EditText textViewEmail;
+    private EditText textViewPassword;
     private Button buttonLogIn;
     private Button buttonSignUp;
 
@@ -74,7 +75,7 @@ public class AuthActivity extends DaggerAppCompatActivity {
                         Snackbar.LENGTH_SHORT)
                         .show();
             } else{
-
+                authViewModel.login(data, email, password);
             }
         });
     }

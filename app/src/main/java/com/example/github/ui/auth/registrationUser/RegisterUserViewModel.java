@@ -1,4 +1,4 @@
-package com.example.github.ui.auth;
+package com.example.github.ui.auth.registrationUser;
 
 import androidx.lifecycle.ViewModel;
 
@@ -6,17 +6,14 @@ import com.example.github.repository.RestaurantRepository;
 
 import javax.inject.Inject;
 
-public class AuthViewModel extends ViewModel {
+public class RegisterUserViewModel extends ViewModel {
 
     private final RestaurantRepository repository;
 
     @Inject
-    public AuthViewModel(RestaurantRepository repository){
+    public RegisterUserViewModel(RestaurantRepository repository){
         this.repository = repository;
     }
 
-    public void login(String type, String email, String password){
-
-    }
 
 }
