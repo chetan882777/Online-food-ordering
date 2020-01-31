@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.github.R;
+import com.example.github.ui.auth.registrationUser.RegistrationUser;
 import com.example.github.ui.main.MainViewModel;
 import com.example.github.ui.main.ViewModelProviderFactory;
 import com.google.android.material.snackbar.Snackbar;
@@ -77,6 +78,13 @@ public class AuthActivity extends DaggerAppCompatActivity {
             } else{
                 authViewModel.login(data, email, password);
             }
+        });
+
+        buttonSignUp.setOnClickListener( v-> {
+
+            Intent intent1 = new Intent(AuthActivity.this, RegistrationUser.class);
+            startActivity(intent1);
+
         });
     }
 }

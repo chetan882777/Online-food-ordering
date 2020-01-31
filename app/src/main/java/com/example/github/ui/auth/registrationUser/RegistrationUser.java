@@ -7,11 +7,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.lifecycle.ViewModelProviders;
+
 import com.example.github.R;
+import com.example.github.ui.main.MainViewModel;
+import com.example.github.ui.main.ViewModelProviderFactory;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javax.inject.Inject;
 
 import dagger.android.support.DaggerAppCompatActivity;
 
@@ -22,6 +28,11 @@ public class RegistrationUser extends DaggerAppCompatActivity {
     private EditText textViewContact;
     private EditText textViewAddress;
     private Button buttonSignUp;
+
+    @Inject
+    ViewModelProviderFactory providerFactory;
+
+    private RegisterUserViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,11 +50,10 @@ public class RegistrationUser extends DaggerAppCompatActivity {
 
         Pattern pattern = Pattern.compile(regex);
 
+        viewModel = ViewModelProviders.of(this, providerFactory).get(RegisterUserViewModel.class);
 
-        buttonSignUp.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
+        buttonSignUp.setOnClickListener( v -> {
 
                 String email = textViewEmail.getText().toString();
                 String password = textViewPassword.getText().toString();
@@ -67,9 +77,8 @@ public class RegistrationUser extends DaggerAppCompatActivity {
                             Snackbar.LENGTH_SHORT)
                             .show();
                 }else{
-
+                    viewModel.register(email, password, contact, address);
                 }
-            }
         });
     }
 }
