@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1015509821279",
+    "firebase_url": "https://crypto-topic-244009.firebaseio.com",
+    "project_id": "crypto-topic-244009",
+    "storage_bucket": "crypto-topic-244009.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1015509821279:android:ad6a06bda5dc5c083878ea",
+        "android_client_info": {
+          "package_name": "com.example.github"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1015509821279-csdjdl87h0shtqemrfmdqvvenib57i9e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.github",
+            "certificate_hash": "e90065a21a5e4723bf8c1881b37054733d738892"
+          }
+        },
+        {
+          "client_id": "1015509821279-q57shba98tpkpduoa01srnprvkm91eeq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBS9u9nrl13KacNXAC2yyEm6y0XFUDnDk8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1015509821279-q57shba98tpkpduoa01srnprvkm91eeq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

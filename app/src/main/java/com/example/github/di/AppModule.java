@@ -1,15 +1,12 @@
 package com.example.github.di;
 
-import android.app.Application;
-
 import com.bumptech.glide.request.RequestOptions;
 import com.example.github.R;
-import com.example.github.repository.GithubRepository;
+import com.example.github.repository.RestaurantRepository;
 import com.example.github.util.Constants;
 
 import javax.inject.Singleton;
 
-import androidx.room.Room;
 import dagger.Module;
 import dagger.Provides;
 import retrofit2.Retrofit;
@@ -34,8 +31,8 @@ public class AppModule {
 
     @Singleton
     @Provides
-    static GithubRepository providesGithubRepository( ){
-        return new GithubRepository();
+    static RestaurantRepository providesGithubRepository( ){
+        return new RestaurantRepository();
     }
 
     @Singleton

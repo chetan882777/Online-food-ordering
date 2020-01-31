@@ -23,9 +23,9 @@ public abstract class MainViewModelModule {
     @ViewModelKey(ReposViewModel.class)
     public abstract ViewModel bindReposViewModel(ReposViewModel viewModel);
 
-    @Binds
-    @IntoMap
-    @ViewModelKey(MainViewModel.class)
-    public abstract ViewModel bindMainViewModel(MainViewModel viewModel);
+        @Binds
+        @IntoMap
+        @ViewModelKey(MainViewModel.class)
+        public abstract ViewModel bindMainViewModel(MainViewModel viewModel);
 
 }

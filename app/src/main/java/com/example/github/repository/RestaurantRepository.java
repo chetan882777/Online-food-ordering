@@ -5,7 +5,7 @@ import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
-public class GithubRepository {
+public class RestaurantRepository {
 
     public static final String NOTE_TITLE_NULL = "Note title cannot be null";
     public static final String INVALID_NOTE_ID = "Invalid id. Can't delete note";
@@ -19,12 +19,12 @@ public class GithubRepository {
     private int timeDelay = 0;
     private TimeUnit timeUnit = TimeUnit.SECONDS;
 
-    private static final String TAG = "GithubRepository";
+    private static final String TAG = "RestaurantRepository";
 
 
 
     @Inject
-    public GithubRepository( ) {
+    public RestaurantRepository( ) {
     }
 
 

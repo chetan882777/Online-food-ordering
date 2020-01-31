@@ -1,6 +1,6 @@
 package com.example.github.ui.main.repos;
 
-import com.example.github.repository.GithubRepository;
+import com.example.github.repository.RestaurantRepository;
 
 import javax.inject.Inject;
 
@@ -8,10 +8,10 @@ import androidx.lifecycle.ViewModel;
 
 public class ReposViewModel extends ViewModel {
 
-    private GithubRepository repository;
+    private RestaurantRepository repository;
 
     @Inject
-    public ReposViewModel(GithubRepository repository) {
+    public ReposViewModel(RestaurantRepository repository) {
         this.repository = repository;
     }
 

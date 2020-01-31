@@ -1,21 +1,18 @@
-package com.example.github.ui.main;
+package com.example.github.ui.auth;
+
+import androidx.lifecycle.ViewModel;
 
 import com.example.github.repository.RestaurantRepository;
 
 import javax.inject.Inject;
 
-import androidx.lifecycle.ViewModel;
-
-public class MainViewModel extends ViewModel {
+public class AuthViewModel extends ViewModel {
 
     private final RestaurantRepository repository;
 
     @Inject
-    public MainViewModel(RestaurantRepository repository){
+    public AuthViewModel(RestaurantRepository repository){
         this.repository = repository;
     }
-
-
-
 
 }
