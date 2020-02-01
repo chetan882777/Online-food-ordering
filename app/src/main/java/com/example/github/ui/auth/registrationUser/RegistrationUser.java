@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.lifecycle.ViewModelProviders;
@@ -16,6 +17,7 @@ import com.example.github.ui.auth.AuthActivity;
 import com.example.github.ui.main.MainActivity;
 import com.example.github.ui.main.MainViewModel;
 import com.example.github.ui.main.ViewModelProviderFactory;
+import com.example.github.ui.user.home.UserHomeActivity;
 import com.example.github.util.Constants;
 import com.example.github.util.SharedPrefUtil;
 import com.google.android.material.snackbar.Snackbar;
@@ -34,6 +36,7 @@ public class RegistrationUser extends DaggerAppCompatActivity {
     private EditText textViewContact;
     private EditText textViewAddress;
     private Button buttonSignUp;
+    private ProgressBar progressBar;
 
     @Inject
     ViewModelProviderFactory providerFactory;
@@ -44,6 +47,9 @@ public class RegistrationUser extends DaggerAppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration_user);
+
+        progressBar = findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.GONE);
 
         textViewEmail = findViewById(R.id.editText_regUserEmail);
         textViewPassword = findViewById(R.id.editText_regUserPass);
@@ -83,15 +89,17 @@ public class RegistrationUser extends DaggerAppCompatActivity {
                             Snackbar.LENGTH_SHORT)
                             .show();
                 }else{
-
+                    progressBar.setVisibility(View.VISIBLE);
                     FirebaseRequestListener<String> listener = data -> {
                         Snackbar.make(buttonSignUp, data, Snackbar.LENGTH_SHORT).show();
+
+                        progressBar.setVisibility(View.GONE);
                         if(data.equals(Constants.FIREBASE_SUCCESS)){
                             SharedPrefUtil sharedPrefUtil = new SharedPrefUtil(RegistrationUser.this);
                             sharedPrefUtil.saveCredentials(contact);
                             sharedPrefUtil.saveType(AuthActivity.INTENT_MESSAGE_AUTH_TYPE_USER);
 
-                            Intent intent = new Intent(this, MainActivity.class);
+                            Intent intent = new Intent(this, UserHomeActivity.class);
                             startActivity(intent);
                         }
                     };

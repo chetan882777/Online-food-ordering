@@ -6,8 +6,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import javax.inject.Inject;
-
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class SharedPrefUtil {
@@ -45,11 +43,35 @@ public class SharedPrefUtil {
             if (preferences.contains(Constants.SHARED_PREF_TYPE)) {
                 return preferences.getString(Constants.SHARED_PREF_TYPE, Constants.SHARED_PREF_TYPE_DEF);
             } else {
-                return null;
+                return Constants.SHARED_PREF_TYPE_DEF;
             }
         }else{
             Log.d(TAG, "getType: preferences null");
             return null;
         }
+    }
+
+    public boolean logout(){
+        if(preferences != null) {
+            if (preferences.contains(Constants.SHARED_PREF_TYPE)) {
+                preferences.edit().putString(Constants.SHARED_PREF_TYPE,
+                        Constants.SHARED_PREF_TYPE_DEF)
+                        .apply();
+            } else {
+                return false;
+            }
+            if (preferences.contains(Constants.SHARED_PREF_AUTH_CREDENTIAL)) {
+                preferences.edit()
+                        .putString(Constants.SHARED_PREF_AUTH_CREDENTIAL,
+                                Constants.SHARED_PREF_AUTH_CREDENTIAL_DEF)
+                        .apply();
+            } else {
+                return false;
+            }
+        }else{
+            Log.d(TAG, "getType: preferences null");
+            return false;
+        }
+        return true;
     }
 }

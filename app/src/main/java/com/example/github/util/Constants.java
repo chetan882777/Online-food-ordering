@@ -22,5 +22,5 @@ public class Constants {
     public static final String SHARED_PREF_AUTH_CREDENTIAL = "SHARED_PREF_AUTH_CREDENTIAL";
     public static final String SHARED_PREF_TYPE = "SHARED_PREF_TYPE";
     public static final String SHARED_PREF_AUTH_CREDENTIAL_DEF = "No User Found";
-    public static final String SHARED_PREF_TYPE_DEF = AuthActivity.INTENT_MESSAGE_AUTH_TYPE_USER;
+    public static final String SHARED_PREF_TYPE_DEF = "Unknown";
 }

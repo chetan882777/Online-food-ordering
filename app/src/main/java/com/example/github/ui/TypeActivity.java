@@ -5,12 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.github.R;
 import com.example.github.di.DaggerAppComponent;
 import com.example.github.ui.auth.AuthActivity;
 import com.example.github.ui.main.MainActivity;
+import com.example.github.ui.user.home.UserHomeActivity;
 import com.example.github.util.SharedPrefUtil;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -22,11 +24,15 @@ import static com.example.github.ui.auth.AuthActivity.*;
 
 public class TypeActivity extends DaggerAppCompatActivity {
 
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_type);
+
+        progressBar = findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.VISIBLE);
 
         SharedPrefUtil sharedPrefUtil = new SharedPrefUtil(this);
 
@@ -35,7 +41,7 @@ public class TypeActivity extends DaggerAppCompatActivity {
         if(type != null && type.equals(INTENT_MESSAGE_AUTH_TYPE_USER)){
             String credentials = sharedPrefUtil.getCredentials();
             if(credentials != null && !credentials.isEmpty()){
-                Intent intent = new Intent(this, MainActivity.class);
+                Intent intent = new Intent(this, UserHomeActivity.class);
                 startActivity(intent);
             }
             else{
@@ -43,6 +49,7 @@ public class TypeActivity extends DaggerAppCompatActivity {
             }
         }
 
+        progressBar.setVisibility(View.GONE);
         Intent intent = new Intent(TypeActivity.this , AuthActivity.class);
 
         findViewById(R.id.user_type_button).setOnClickListener(new View.OnClickListener() {
