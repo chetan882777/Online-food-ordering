@@ -111,21 +111,15 @@ public class RegisterRestaurant extends DaggerAppCompatActivity {
             }else if(!matcher.matches()){
                 showMessage("Enter valid E-Mail");
             }else{
-                String[] offDay = new String[offDays.size()];
-                int i=0;
-                for(String s: offDays){
-                    offDay[i] = s;
-                    i++;
-                }
-                register(email, password, contact, address, offDay);
+                register(email, password, contact, address);
             }
         });
     }
 
-    private void register(String email, String password, String contact, String address, String[] offDay) {
+    private void register(String email, String password, String contact, String address) {
         Restaurant restaurant = new Restaurant(email, password, contact, address,
                 null, null, ""+startHour, ""+startMinute,
-                ""+endHour, ""+endMinute, offDay);
+                ""+endHour, ""+endMinute, offDays);
         FirebaseRequestListener<String> listener = (s -> {
             showMessage(s);
             if(s.equals(Constants.FIREBASE_SUCCESS)){

@@ -71,6 +71,15 @@ public class TypeActivity extends DaggerAppCompatActivity {
             else{
                 Toast.makeText(this, "Something went wrong! Login again", Toast.LENGTH_LONG).show();
             }
+        }else if(type != null && type.equals(INTENT_MESSAGE_AUTH_TYPE_RESTAURANT)){
+            Toast.makeText(this, "Type restaurant", Toast.LENGTH_LONG).show();
+            String credentials = sharedPrefUtil.getCredentials();
+            if(credentials != null && !credentials.isEmpty()){
+                Toast.makeText(this, "" + credentials, Toast.LENGTH_LONG).show();
+            }
+            else{
+                Toast.makeText(this, "Something went wrong! Login again", Toast.LENGTH_LONG).show();
+            }
         }
     }
 }

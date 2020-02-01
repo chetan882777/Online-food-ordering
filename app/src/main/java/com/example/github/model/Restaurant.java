@@ -1,5 +1,7 @@
 package com.example.github.model;
 
+import java.util.List;
+
 public class Restaurant {
 
     private String email;
@@ -12,14 +14,14 @@ public class Restaurant {
     private String startMinute;
     private String endHour;
     private String endMinute;
-    private String[] offDays;
+    private List<String> offDays;
 
     public Restaurant() {
     }
 
     public Restaurant(String email, String password, String contact, String address, String lat,
                       String lang, String startHour, String startMinute, String endHour,
-                      String endMinute, String[] offDays) {
+                      String endMinute, List<String> offDays) {
         this.email = email;
         this.password = password;
         this.contact = contact;
@@ -113,11 +115,11 @@ public class Restaurant {
         this.endMinute = endMinute;
     }
 
-    public String[] getOffDays() {
+    public List<String> getOffDays() {
         return offDays;
     }
 
-    public void setOffDays(String[] offDays) {
+    public void setOffDays(List<String> offDays) {
         this.offDays = offDays;
     }
 }

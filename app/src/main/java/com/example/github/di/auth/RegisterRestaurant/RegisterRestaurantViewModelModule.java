@@ -16,5 +16,5 @@ public abstract class RegisterRestaurantViewModelModule {
         @Binds
         @IntoMap
         @ViewModelKey(RegisterRestaurantViewModel.class)
-        public abstract ViewModel bindRegisterRestaurantViewModel(RegisterUserViewModel viewModel);
+        public abstract ViewModel bindRegisterRestaurantViewModel(RegisterRestaurantViewModel viewModel);
 }

@@ -11,9 +11,14 @@ import com.example.github.util.Constants;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import javax.inject.Inject;
+
 public class RegisterRestaurantViewModel extends ViewModel {
 
     private static final String TAG = "RegisterRestaurantViewM";
+
+    @Inject
+    public RegisterRestaurantViewModel(){}
 
     public void register(Restaurant restaurant, FirebaseRequestListener<String> listener) {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
