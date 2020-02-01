@@ -79,32 +79,37 @@ public class RegistrationUser extends DaggerAppCompatActivity {
                         (contact.isEmpty() || contact.equals("")) ||
                         (address.isEmpty() || address.equals(""))
                 ) {
-                    Snackbar.make(buttonSignUp,
-                            "Any of the field cannot be empty",
-                            Snackbar.LENGTH_SHORT)
-                            .show();
+                    showMessage("Any of the field cannot be empty");
                 }else if(!matcher.matches()){
-                    Snackbar.make(buttonSignUp,
-                            "Enter valid E-Mail",
-                            Snackbar.LENGTH_SHORT)
-                            .show();
+                    showMessage("Enter valid E-Mail");
                 }else{
-                    progressBar.setVisibility(View.VISIBLE);
-                    FirebaseRequestListener<String> listener = data -> {
-                        Snackbar.make(buttonSignUp, data, Snackbar.LENGTH_SHORT).show();
-
-                        progressBar.setVisibility(View.GONE);
-                        if(data.equals(Constants.FIREBASE_SUCCESS)){
-                            SharedPrefUtil sharedPrefUtil = new SharedPrefUtil(RegistrationUser.this);
-                            sharedPrefUtil.saveCredentials(contact);
-                            sharedPrefUtil.saveType(AuthActivity.INTENT_MESSAGE_AUTH_TYPE_USER);
-
-                            Intent intent = new Intent(this, UserHomeActivity.class);
-                            startActivity(intent);
-                        }
-                    };
-                    viewModel.register(email, password, contact, address, listener);
+                    register(email, password, contact, address);
                 }
         });
+    }
+
+    private void showMessage(String s) {
+        Snackbar.make(buttonSignUp,
+                s,
+                Snackbar.LENGTH_SHORT)
+                .show();
+    }
+
+    private void register(String email, String password, String contact, String address) {
+        progressBar.setVisibility(View.VISIBLE);
+        FirebaseRequestListener<String> listener = data -> {
+            showMessage(data);
+
+            progressBar.setVisibility(View.GONE);
+            if(data.equals(Constants.FIREBASE_SUCCESS)){
+                SharedPrefUtil sharedPrefUtil = new SharedPrefUtil(RegistrationUser.this);
+                sharedPrefUtil.saveCredentials(contact);
+                sharedPrefUtil.saveType(AuthActivity.INTENT_MESSAGE_AUTH_TYPE_USER);
+
+                Intent intent = new Intent(this, UserHomeActivity.class);
+                startActivity(intent);
+            }
+        };
+        viewModel.register(email, password, contact, address, listener);
     }
 }

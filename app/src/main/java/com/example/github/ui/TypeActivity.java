@@ -38,16 +38,7 @@ public class TypeActivity extends DaggerAppCompatActivity {
 
         String type = sharedPrefUtil.getType();
 
-        if(type != null && type.equals(INTENT_MESSAGE_AUTH_TYPE_USER)){
-            String credentials = sharedPrefUtil.getCredentials();
-            if(credentials != null && !credentials.isEmpty()){
-                Intent intent = new Intent(this, UserHomeActivity.class);
-                startActivity(intent);
-            }
-            else{
-                Toast.makeText(this, "Something went wrong! Login again", Toast.LENGTH_LONG).show();
-            }
-        }
+        checkCredentials(sharedPrefUtil, type);
 
         progressBar.setVisibility(View.GONE);
         Intent intent = new Intent(TypeActivity.this , AuthActivity.class);
@@ -68,5 +59,18 @@ public class TypeActivity extends DaggerAppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    private void checkCredentials(SharedPrefUtil sharedPrefUtil, String type) {
+        if(type != null && type.equals(INTENT_MESSAGE_AUTH_TYPE_USER)){
+            String credentials = sharedPrefUtil.getCredentials();
+            if(credentials != null && !credentials.isEmpty()){
+                Intent intent = new Intent(this, UserHomeActivity.class);
+                startActivity(intent);
+            }
+            else{
+                Toast.makeText(this, "Something went wrong! Login again", Toast.LENGTH_LONG).show();
+            }
+        }
     }
 }

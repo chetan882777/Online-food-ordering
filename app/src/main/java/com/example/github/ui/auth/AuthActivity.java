@@ -56,24 +56,17 @@ public class AuthActivity extends DaggerAppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth);
 
-        progressBar = findViewById(R.id.progressBar);
-        progressBar.setVisibility(View.GONE);
-
         authViewModel = ViewModelProviders.of(this, providerFactory).get(AuthViewModel.class);
 
         Intent intent = getIntent();
 
         String data = intent.getStringExtra(INTENT_MESSAGE_AUTH_TYPE);
 
-        buttonLogIn = findViewById(R.id.button_login);
-        buttonSignUp = findViewById(R.id.button_signup);
-        textViewEmail = findViewById(R.id.editText_email);
-        textViewPassword = findViewById(R.id.editText_password);
+        setLayout();
 
         buttonLogIn.setOnClickListener(v -> {
             String contact = textViewEmail.getText().toString();
             String password = textViewPassword.getText().toString();
-
 
             if((contact.isEmpty() || contact.equals("")) || (password.isEmpty() || password.equals(""))) {
                 Snackbar.make(buttonLogIn,
@@ -81,30 +74,44 @@ public class AuthActivity extends DaggerAppCompatActivity {
                         Snackbar.LENGTH_SHORT)
                         .show();
             }else{
-
-                progressBar.setVisibility(View.VISIBLE);
-                FirebaseRequestListener<String> listener = data1 -> {
-                    Snackbar.make(buttonSignUp, data1, Snackbar.LENGTH_SHORT).show();
-                    progressBar.setVisibility(View.GONE);
-                    if(data1.equals(Constants.FIREBASE_SUCCESS)){
-                        Log.d(TAG, "onCreate: Success");
-                        SharedPrefUtil sharedPrefUtil = new SharedPrefUtil(AuthActivity.this);
-                        sharedPrefUtil.saveCredentials(contact);
-                        sharedPrefUtil.saveType(AuthActivity.INTENT_MESSAGE_AUTH_TYPE_USER);
-
-                        Intent intent1 = new Intent(AuthActivity.this, UserHomeActivity.class);
-                        startActivity(intent1);
-                    }
-                };
-                authViewModel.login(data, contact, password, listener);
+                logIn(data, contact, password);
             }
         });
-
         buttonSignUp.setOnClickListener( v-> {
-
-            Intent intent1 = new Intent(AuthActivity.this, RegistrationUser.class);
-            startActivity(intent1);
-
+            signUp();
         });
+    }
+
+    private void setLayout() {
+        progressBar = findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.GONE);
+
+        buttonLogIn = findViewById(R.id.button_login);
+        buttonSignUp = findViewById(R.id.button_signup);
+        textViewEmail = findViewById(R.id.editText_email);
+        textViewPassword = findViewById(R.id.editText_password);
+    }
+
+    private void signUp() {
+        Intent intent1 = new Intent(AuthActivity.this, RegistrationUser.class);
+        startActivity(intent1);
+    }
+
+    private void logIn(String data, String contact, String password) {
+        progressBar.setVisibility(View.VISIBLE);
+        FirebaseRequestListener<String> listener = data1 -> {
+            Snackbar.make(buttonSignUp, data1, Snackbar.LENGTH_SHORT).show();
+            progressBar.setVisibility(View.GONE);
+            if(data1.equals(Constants.FIREBASE_SUCCESS)){
+                Log.d(TAG, "onCreate: Success");
+                SharedPrefUtil sharedPrefUtil = new SharedPrefUtil(AuthActivity.this);
+                sharedPrefUtil.saveCredentials(contact);
+                sharedPrefUtil.saveType(AuthActivity.INTENT_MESSAGE_AUTH_TYPE_USER);
+
+                Intent intent1 = new Intent(AuthActivity.this, UserHomeActivity.class);
+                startActivity(intent1);
+            }
+        };
+        authViewModel.login(data, contact, password, listener);
     }
 }
