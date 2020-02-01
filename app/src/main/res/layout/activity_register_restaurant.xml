@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="12:30 PM"
+        android:text="11 : 00"
         android:textSize="16dp"
         app:layout_constraintEnd_toStartOf="@+id/textView_regRes_activeTimeEnd"
         app:layout_constraintStart_toStartOf="@+id/textView_resType_activeTimeLabel"
@@ -149,7 +149,7 @@
         android:id="@+id/textView_regRes_activeTimeEnd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="12 : 00 AM"
+        android:text="23 : 00"
         app:layout_constraintEnd_toEndOf="@+id/textView_resType_activeTimeLabel"
         app:layout_constraintStart_toEndOf="@+id/textView_regRes_activeTimeStart"
         app:layout_constraintTop_toTopOf="@+id/textView_regRes_activeTimeStart" />
