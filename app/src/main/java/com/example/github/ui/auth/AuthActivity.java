@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.github.R;
 import com.example.github.firebase.FirebaseRequestListener;
+import com.example.github.ui.auth.registrationRestaurant.RegisterRestaurant;
 import com.example.github.ui.auth.registrationUser.RegistrationUser;
 import com.example.github.ui.main.MainActivity;
 import com.example.github.ui.main.MainViewModel;
@@ -78,7 +79,7 @@ public class AuthActivity extends DaggerAppCompatActivity {
             }
         });
         buttonSignUp.setOnClickListener( v-> {
-            signUp();
+            signUp(data);
         });
     }
 
@@ -92,9 +93,14 @@ public class AuthActivity extends DaggerAppCompatActivity {
         textViewPassword = findViewById(R.id.editText_password);
     }
 
-    private void signUp() {
-        Intent intent1 = new Intent(AuthActivity.this, RegistrationUser.class);
-        startActivity(intent1);
+    private void signUp(String data) {
+        if(data.equals(INTENT_MESSAGE_AUTH_TYPE_USER)) {
+            Intent intent1 = new Intent(AuthActivity.this, RegistrationUser.class);
+            startActivity(intent1);
+        }else{
+            Intent intent1 = new Intent(AuthActivity.this, RegisterRestaurant.class);
+            startActivity(intent1);
+        }
     }
 
     private void logIn(String data, String contact, String password) {
