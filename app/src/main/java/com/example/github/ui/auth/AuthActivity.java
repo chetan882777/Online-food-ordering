@@ -11,9 +11,12 @@ import android.widget.TextView;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.github.R;
+import com.example.github.firebase.FirebaseRequestListener;
 import com.example.github.ui.auth.registrationUser.RegistrationUser;
+import com.example.github.ui.main.MainActivity;
 import com.example.github.ui.main.MainViewModel;
 import com.example.github.ui.main.ViewModelProviderFactory;
+import com.example.github.util.Constants;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.regex.Matcher;
@@ -55,28 +58,26 @@ public class AuthActivity extends DaggerAppCompatActivity {
         textViewEmail = findViewById(R.id.editText_email);
         textViewPassword = findViewById(R.id.editText_password);
 
-        String regex = "^(.+)@(.+)$";
-
-        Pattern pattern = Pattern.compile(regex);
-
         buttonLogIn.setOnClickListener(v -> {
-            String email = textViewEmail.getText().toString();
+            String contact = textViewEmail.getText().toString();
             String password = textViewPassword.getText().toString();
 
-            Matcher matcher = pattern.matcher(email);
 
-            if((email.isEmpty() || email.equals("")) || (password.isEmpty() || password.equals(""))) {
+            if((contact.isEmpty() || contact.equals("")) || (password.isEmpty() || password.equals(""))) {
                 Snackbar.make(buttonLogIn,
                         "Any of the field cannot be empty",
                         Snackbar.LENGTH_SHORT)
                         .show();
-            }else if(!matcher.matches()){
-                Snackbar.make(buttonLogIn,
-                        "Enter valid E-Mail",
-                        Snackbar.LENGTH_SHORT)
-                        .show();
-            } else{
-                authViewModel.login(data, email, password);
+            }else{
+
+                FirebaseRequestListener<String> listener = data1 -> {
+                    Snackbar.make(buttonSignUp, data1, Snackbar.LENGTH_SHORT).show();
+                    if(data.equals(Constants.FIREBASE_SUCCESS)){
+                        Intent intent1 = new Intent(this, MainActivity.class);
+                        startActivity(intent1);
+                    }
+                };
+                authViewModel.login(data, contact, password, listener);
             }
         });
 

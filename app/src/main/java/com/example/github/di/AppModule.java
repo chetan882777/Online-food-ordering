@@ -1,5 +1,9 @@
 package com.example.github.di;
 
+import android.app.Application;
+import android.content.Context;
+import android.content.SharedPreferences;
+
 import com.bumptech.glide.request.RequestOptions;
 import com.example.github.R;
 import com.example.github.repository.RestaurantRepository;
@@ -42,6 +46,12 @@ public class AppModule {
                 .centerCrop()
                 .placeholder(R.mipmap.ic_launcher_round)
                 .error(R.mipmap.ic_launcher_round);
+    }
+
+    @Singleton
+    @Provides
+    static SharedPreferences providesSharedPreferences(Application application){
+        return application.getSharedPreferences("restaurantPrefs", Context.MODE_PRIVATE);
     }
 
 

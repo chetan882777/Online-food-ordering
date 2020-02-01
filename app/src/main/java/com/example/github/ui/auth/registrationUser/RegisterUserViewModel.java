@@ -9,6 +9,9 @@ import androidx.lifecycle.ViewModel;
 import com.example.github.firebase.FirebaseRequestListener;
 import com.example.github.model.User;
 import com.example.github.repository.RestaurantRepository;
+import com.example.github.ui.auth.AuthActivity;
+import com.example.github.util.Constants;
+import com.example.github.util.SharedPrefUtil;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -20,11 +23,16 @@ import java.util.prefs.Preferences;
 
 import javax.inject.Inject;
 
+import okhttp3.internal.Util;
+
 public class RegisterUserViewModel extends ViewModel {
 
     private static final String TAG = "RegisterUserViewModel";
 
     private final RestaurantRepository repository;
+
+    @Inject
+    SharedPreferences preferences;
 
     @Inject
     public RegisterUserViewModel(RestaurantRepository repository){
@@ -38,11 +46,14 @@ public class RegisterUserViewModel extends ViewModel {
         User user = new User(email, password, contact, address, null, null);
 
         userRef.setValue(user).addOnCompleteListener(task -> {
+
             Log.d(TAG, "onComplete: successful");
-            listener.OnFirebaseRequest("Success");
+            listener.OnFirebaseRequest(Constants.FIREBASE_SUCCESS);
+            SharedPrefUtil.saveCredentials(user.getContact());
+            SharedPrefUtil.saveType(AuthActivity.INTENT_MESSAGE_AUTH_TYPE_USER);
         }).addOnFailureListener(e -> {
             Log.d(TAG, "onFailure: failed = " + e.getMessage());
-            listener.OnFirebaseRequest("Failed");
+            listener.OnFirebaseRequest(Constants.FIREBASE_FAILED);
         });
     }
 }

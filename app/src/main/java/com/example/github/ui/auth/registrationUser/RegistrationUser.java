@@ -1,6 +1,7 @@
 package com.example.github.ui.auth.registrationUser;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,8 +12,10 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.github.R;
 import com.example.github.firebase.FirebaseRequestListener;
+import com.example.github.ui.main.MainActivity;
 import com.example.github.ui.main.MainViewModel;
 import com.example.github.ui.main.ViewModelProviderFactory;
+import com.example.github.util.Constants;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.regex.Matcher;
@@ -79,9 +82,13 @@ public class RegistrationUser extends DaggerAppCompatActivity {
                             .show();
                 }else{
 
-                    FirebaseRequestListener<String> listener = data ->
-                            Snackbar.make(buttonSignUp, data, Snackbar.LENGTH_SHORT).show();
-
+                    FirebaseRequestListener<String> listener = data -> {
+                        Snackbar.make(buttonSignUp, data, Snackbar.LENGTH_SHORT).show();
+                        if(data.equals(Constants.FIREBASE_SUCCESS)){
+                            Intent intent = new Intent(this, MainActivity.class);
+                            startActivity(intent);
+                        }
+                    };
                     viewModel.register(email, password, contact, address, listener);
                 }
         });

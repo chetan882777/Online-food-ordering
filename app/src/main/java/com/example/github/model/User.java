@@ -9,6 +9,8 @@ public class User {
     private String lat;
     private String lang;
 
+    public User(){}
+
     public User(String email, String password, String contact, String address, String lat, String lang) {
         this.email = email;
         this.password = password;
