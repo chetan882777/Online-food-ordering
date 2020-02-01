@@ -17,6 +17,7 @@ import com.example.github.ui.main.MainActivity;
 import com.example.github.ui.main.MainViewModel;
 import com.example.github.ui.main.ViewModelProviderFactory;
 import com.example.github.util.Constants;
+import com.example.github.util.SharedPrefUtil;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.regex.Matcher;
@@ -73,7 +74,12 @@ public class AuthActivity extends DaggerAppCompatActivity {
                 FirebaseRequestListener<String> listener = data1 -> {
                     Snackbar.make(buttonSignUp, data1, Snackbar.LENGTH_SHORT).show();
                     if(data.equals(Constants.FIREBASE_SUCCESS)){
-                        Intent intent1 = new Intent(this, MainActivity.class);
+
+                        SharedPrefUtil sharedPrefUtil = new SharedPrefUtil(AuthActivity.this);
+                        sharedPrefUtil.saveCredentials(contact);
+                        sharedPrefUtil.saveType(AuthActivity.INTENT_MESSAGE_AUTH_TYPE_USER);
+
+                        Intent intent1 = new Intent(AuthActivity.this, MainActivity.class);
                         startActivity(intent1);
                     }
                 };

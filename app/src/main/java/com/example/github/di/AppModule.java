@@ -8,6 +8,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.github.R;
 import com.example.github.repository.RestaurantRepository;
 import com.example.github.util.Constants;
+import com.example.github.util.SharedPrefUtil;
 
 import javax.inject.Singleton;
 
@@ -31,8 +32,6 @@ public class AppModule {
                 .build();
     }
 
-
-
     @Singleton
     @Provides
     static RestaurantRepository providesGithubRepository( ){
@@ -47,12 +46,4 @@ public class AppModule {
                 .placeholder(R.mipmap.ic_launcher_round)
                 .error(R.mipmap.ic_launcher_round);
     }
-
-    @Singleton
-    @Provides
-    static SharedPreferences providesSharedPreferences(Application application){
-        return application.getSharedPreferences("restaurantPrefs", Context.MODE_PRIVATE);
-    }
-
-
 }

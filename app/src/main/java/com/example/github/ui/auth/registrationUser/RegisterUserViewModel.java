@@ -32,9 +32,6 @@ public class RegisterUserViewModel extends ViewModel {
     private final RestaurantRepository repository;
 
     @Inject
-    SharedPreferences preferences;
-
-    @Inject
     public RegisterUserViewModel(RestaurantRepository repository){
         this.repository = repository;
     }
@@ -46,11 +43,8 @@ public class RegisterUserViewModel extends ViewModel {
         User user = new User(email, password, contact, address, null, null);
 
         userRef.setValue(user).addOnCompleteListener(task -> {
-
             Log.d(TAG, "onComplete: successful");
             listener.OnFirebaseRequest(Constants.FIREBASE_SUCCESS);
-            SharedPrefUtil.saveCredentials(user.getContact());
-            SharedPrefUtil.saveType(AuthActivity.INTENT_MESSAGE_AUTH_TYPE_USER);
         }).addOnFailureListener(e -> {
             Log.d(TAG, "onFailure: failed = " + e.getMessage());
             listener.OnFirebaseRequest(Constants.FIREBASE_FAILED);

@@ -20,6 +20,7 @@ public class AuthViewModel extends ViewModel {
 
     private final RestaurantRepository repository;
 
+
     @Inject
     public AuthViewModel(RestaurantRepository repository){
         this.repository = repository;
@@ -39,8 +40,6 @@ public class AuthViewModel extends ViewModel {
 
                         if(user.getPassword().equals(password)){
 
-                            SharedPrefUtil.saveCredentials(contact);
-                            SharedPrefUtil.saveType(AuthActivity.INTENT_MESSAGE_AUTH_TYPE_USER);
                             listener.OnFirebaseRequest(Constants.FIREBASE_SUCCESS);
 
                         }else{

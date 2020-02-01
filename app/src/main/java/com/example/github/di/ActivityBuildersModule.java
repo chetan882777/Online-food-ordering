@@ -5,6 +5,7 @@ import com.example.github.di.auth.RegisterUser.RegisterUserViewModelModule;
 import com.example.github.di.main.MainFragmentBuildersModule;
 import com.example.github.di.main.MainModule;
 import com.example.github.di.main.MainViewModelModule;
+import com.example.github.ui.TypeActivity;
 import com.example.github.ui.auth.AuthActivity;
 import com.example.github.ui.auth.registrationUser.RegistrationUser;
 import com.example.github.ui.main.MainActivity;
@@ -31,6 +32,12 @@ public abstract class ActivityBuildersModule {
             }
     )
     abstract AuthActivity contributeAuthActivity();
+
+
+    @ContributesAndroidInjector(
+
+    )
+    abstract TypeActivity contributeTypeActivity();
 
 
 
