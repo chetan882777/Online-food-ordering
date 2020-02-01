@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.github.R;
+import com.example.github.firebase.FirebaseRequestListener;
 import com.example.github.ui.main.MainViewModel;
 import com.example.github.ui.main.ViewModelProviderFactory;
 import com.google.android.material.snackbar.Snackbar;
@@ -77,7 +78,11 @@ public class RegistrationUser extends DaggerAppCompatActivity {
                             Snackbar.LENGTH_SHORT)
                             .show();
                 }else{
-                    viewModel.register(email, password, contact, address);
+
+                    FirebaseRequestListener<String> listener = data ->
+                            Snackbar.make(buttonSignUp, data, Snackbar.LENGTH_SHORT).show();
+
+                    viewModel.register(email, password, contact, address, listener);
                 }
         });
     }
