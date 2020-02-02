@@ -22,7 +22,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
     private MenuItemClickListener listener;
 
     public interface MenuItemClickListener{
-        void onMenuItemCLickListener();
+        void onMenuItemCLickListener(View v);
     }
 
     public MenuAdapter(Context mContext, List<Menu> menus, MenuItemClickListener listener) {
@@ -70,7 +70,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
 
         @Override
         public void onClick(View v) {
-            listener.onMenuItemCLickListener();
+            listener.onMenuItemCLickListener(v);
         }
     }
 
