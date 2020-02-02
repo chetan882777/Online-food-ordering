@@ -25,6 +25,15 @@
         android:layout_height="wrap_content"
         android:text="Add Menu"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button_addMenu_save"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/button_addMenu_save"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/button_addMenu" />
 </androidx.constraintlayout.widget.ConstraintLayout>
