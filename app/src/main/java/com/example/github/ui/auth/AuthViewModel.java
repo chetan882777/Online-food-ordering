@@ -30,32 +30,42 @@ public class AuthViewModel extends ViewModel {
         if(type.equals(AuthActivity.INTENT_MESSAGE_AUTH_TYPE_USER)){
             FirebaseDatabase database = FirebaseDatabase.getInstance();
 
-            DatabaseReference userRef = database.getReference("user");
+            authenticate(contact, password, listener, database, "user");
+        }else if(type.equals(AuthActivity.INTENT_MESSAGE_AUTH_TYPE_RESTAURANT)){
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
 
-            userRef.child(contact).addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    if(dataSnapshot.exists()){
-                        User user = dataSnapshot.getValue(User.class);
+            authenticate(contact, password, listener, database, "restaurant");
 
-                        if(user.getPassword().equals(password)){
-
-                            listener.OnFirebaseRequest(Constants.FIREBASE_SUCCESS);
-
-                        }else{
-                            listener.OnFirebaseRequest("Invalid Password");
-                        }
-                    }else{
-                        listener.OnFirebaseRequest("No User found");
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-                    listener.OnFirebaseRequest(Constants.FIREBASE_FAILED);
-                }
-            });
         }
+    }
+
+    private void authenticate(String contact, String password, FirebaseRequestListener<String> listener,
+                              FirebaseDatabase database, String s) {
+        DatabaseReference userRef = database.getReference(s);
+
+        userRef.child(contact).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    User user = dataSnapshot.getValue(User.class);
+
+                    if (user.getPassword().equals(password)) {
+
+                        listener.OnFirebaseRequest(Constants.FIREBASE_SUCCESS);
+
+                    } else {
+                        listener.OnFirebaseRequest("Invalid Password");
+                    }
+                } else {
+                    listener.OnFirebaseRequest("No User found");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                listener.OnFirebaseRequest(Constants.FIREBASE_FAILED);
+            }
+        });
     }
 
 }

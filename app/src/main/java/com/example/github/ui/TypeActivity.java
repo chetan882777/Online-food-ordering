@@ -10,8 +10,10 @@ import android.widget.Toast;
 
 import com.example.github.R;
 import com.example.github.di.DaggerAppComponent;
+import com.example.github.model.Restaurant;
 import com.example.github.ui.auth.AuthActivity;
 import com.example.github.ui.main.MainActivity;
+import com.example.github.ui.restaurant.home.RestaurantHomeActivity;
 import com.example.github.ui.user.home.UserHomeActivity;
 import com.example.github.util.SharedPrefUtil;
 import com.google.android.material.snackbar.Snackbar;
@@ -33,6 +35,8 @@ public class TypeActivity extends DaggerAppCompatActivity {
 
         progressBar = findViewById(R.id.progressBar);
         progressBar.setVisibility(View.VISIBLE);
+
+        setTitle("Food ordering system");
 
         SharedPrefUtil sharedPrefUtil = new SharedPrefUtil(this);
 
@@ -72,10 +76,10 @@ public class TypeActivity extends DaggerAppCompatActivity {
                 Toast.makeText(this, "Something went wrong! Login again", Toast.LENGTH_LONG).show();
             }
         }else if(type != null && type.equals(INTENT_MESSAGE_AUTH_TYPE_RESTAURANT)){
-            Toast.makeText(this, "Type restaurant", Toast.LENGTH_LONG).show();
             String credentials = sharedPrefUtil.getCredentials();
             if(credentials != null && !credentials.isEmpty()){
-                Toast.makeText(this, "" + credentials, Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(this, RestaurantHomeActivity.class);
+                startActivity(intent);
             }
             else{
                 Toast.makeText(this, "Something went wrong! Login again", Toast.LENGTH_LONG).show();

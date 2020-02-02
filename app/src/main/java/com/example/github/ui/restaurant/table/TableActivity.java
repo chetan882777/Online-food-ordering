@@ -15,6 +15,7 @@ import com.example.github.R;
 import com.example.github.firebase.FirebaseRequestListener;
 import com.example.github.model.Tables;
 import com.example.github.ui.main.ViewModelProviderFactory;
+import com.example.github.ui.restaurant.home.RestaurantHomeActivity;
 import com.example.github.util.Constants;
 import com.example.github.util.SharedPrefUtil;
 import com.google.android.material.snackbar.Snackbar;
@@ -45,6 +46,7 @@ public class TableActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_table);
 
+        setTitle("Add Tables");
         Intent intent = getIntent();
         String msg = intent.getStringExtra(INTENT_TABLE_MSG);
 
@@ -70,7 +72,8 @@ public class TableActivity extends AppCompatActivity {
             FirebaseRequestListener<String> listener = data -> {
                 showMessage(data);
                 if(data.equals(Constants.FIREBASE_SUCCESS)){
-
+                    Intent intent = new Intent(TableActivity.this, RestaurantHomeActivity.class);
+                    startActivity(intent);
                 }
             };
 

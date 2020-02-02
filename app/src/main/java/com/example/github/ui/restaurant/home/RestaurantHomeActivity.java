@@ -1,45 +1,34 @@
-package com.example.github.ui.user.home;
-
-import android.content.Intent;
-import android.os.Bundle;
-
-import com.example.github.R;
-import com.example.github.ui.TypeActivity;
-import com.example.github.util.SharedPrefUtil;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
-import android.view.MenuItem;
-import android.view.View;
+package com.example.github.ui.restaurant.home;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.core.view.GravityCompat;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
-
-import com.google.android.material.navigation.NavigationView;
-
-import androidx.drawerlayout.widget.DrawerLayout;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
-public class UserHomeActivity extends AppCompatActivity {
+import com.example.github.R;
+import com.example.github.model.Restaurant;
+import com.example.github.ui.TypeActivity;
+import com.example.github.ui.user.home.UserHomeActivity;
+import com.example.github.util.SharedPrefUtil;
+import com.google.android.material.navigation.NavigationView;
+
+public class RestaurantHomeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_home);
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setContentView(R.layout.activity_restaurant_home);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_restaurant);
         setSupportActionBar(toolbar);
-        toolbar.setTitle("User");
+        toolbar.setTitle("Restaurant");
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -55,16 +44,15 @@ public class UserHomeActivity extends AppCompatActivity {
                     return true;
                 }
                 else if(id == R.id.nav_logout){
-                    SharedPrefUtil sharedPrefUtil = new SharedPrefUtil(UserHomeActivity.this);
+                    SharedPrefUtil sharedPrefUtil = new SharedPrefUtil(RestaurantHomeActivity.this);
                     sharedPrefUtil.logout();
-                    startActivity(new Intent(UserHomeActivity.this, TypeActivity.class));
+                    startActivity(new Intent(RestaurantHomeActivity.this, TypeActivity.class));
                     return true;
                 }
                 return false;
             }
         });
-
-        Toast.makeText(this,"User", Toast.LENGTH_LONG).show();
+        Toast.makeText(this,"Restaurant", Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -84,5 +72,4 @@ public class UserHomeActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.user_home, menu);
         return true;
     }
-
 }

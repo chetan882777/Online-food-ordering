@@ -14,7 +14,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.restaurant.table.TableActivity"></activity>
+        <activity android:name=".ui.restaurant.home.RestaurantHomeActivity"
+            android:label="@string/title_activity_user_home"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".ui.restaurant.table.TableActivity" />
         <activity android:name=".ui.restaurant.menu.MenuActivity" />
         <activity android:name=".ui.auth.registrationRestaurant.RegisterRestaurant" />
         <activity

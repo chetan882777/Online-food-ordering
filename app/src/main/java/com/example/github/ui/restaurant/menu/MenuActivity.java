@@ -53,6 +53,7 @@ public class MenuActivity extends DaggerAppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+        setTitle("Add menus");
 
         Intent intent = getIntent();
         msg = intent.getStringExtra(INTENT_MENU_MSG);

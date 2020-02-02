@@ -19,6 +19,7 @@ import com.example.github.ui.auth.registrationUser.RegistrationUser;
 import com.example.github.ui.main.MainActivity;
 import com.example.github.ui.main.MainViewModel;
 import com.example.github.ui.main.ViewModelProviderFactory;
+import com.example.github.ui.restaurant.home.RestaurantHomeActivity;
 import com.example.github.ui.user.home.UserHomeActivity;
 import com.example.github.util.Constants;
 import com.example.github.util.SharedPrefUtil;
@@ -112,10 +113,16 @@ public class AuthActivity extends DaggerAppCompatActivity {
                 Log.d(TAG, "onCreate: Success");
                 SharedPrefUtil sharedPrefUtil = new SharedPrefUtil(AuthActivity.this);
                 sharedPrefUtil.saveCredentials(contact);
-                sharedPrefUtil.saveType(AuthActivity.INTENT_MESSAGE_AUTH_TYPE_USER);
 
-                Intent intent1 = new Intent(AuthActivity.this, UserHomeActivity.class);
-                startActivity(intent1);
+                if(data.equals(INTENT_MESSAGE_AUTH_TYPE_USER)) {
+                    sharedPrefUtil.saveType(AuthActivity.INTENT_MESSAGE_AUTH_TYPE_USER);
+                    Intent intent1 = new Intent(AuthActivity.this, UserHomeActivity.class);
+                    startActivity(intent1);
+                }else if(data.equals(INTENT_MESSAGE_AUTH_TYPE_RESTAURANT)){
+                    sharedPrefUtil.saveType(AuthActivity.INTENT_MESSAGE_AUTH_TYPE_RESTAURANT);
+                    Intent intent1 = new Intent(AuthActivity.this, RestaurantHomeActivity.class);
+                    startActivity(intent1);
+                }
             }
         };
         authViewModel.login(data, contact, password, listener);
