@@ -1,9 +1,17 @@
 package com.example.github.ui.auth.registrationRestaurant;
 
 
+import android.Manifest;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -12,10 +20,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.github.BuildConfig;
 import com.example.github.R;
 import com.example.github.firebase.FirebaseRequestListener;
 import com.example.github.model.Restaurant;
@@ -27,6 +39,14 @@ import com.example.github.ui.restaurant.menu.MenuActivity;
 import com.example.github.ui.user.home.UserHomeActivity;
 import com.example.github.util.Constants;
 import com.example.github.util.SharedPrefUtil;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
@@ -40,6 +60,8 @@ import javax.inject.Inject;
 import dagger.android.support.DaggerAppCompatActivity;
 
 public class RegisterRestaurant extends DaggerAppCompatActivity {
+
+    private static final String TAG = "RegisterRestaurant";
 
     public static final String RESTAURANT_TYPE_VEG = "Veg only";
     public static final String RESTAURANT_TYPE_NON_VEG = "Non-Veg only";
@@ -72,6 +94,15 @@ public class RegisterRestaurant extends DaggerAppCompatActivity {
     ViewModelProviderFactory providerFactory;
     RegisterRestaurantViewModel viewModel;
 
+
+    private FusedLocationProviderClient mFusedLocationClient;
+    private Location lastLocation;
+    private LocationRequest locationRequest;
+    private LocationCallback mLocationCallback;
+
+    private static final int REQUEST_PERMISSIONS_REQUEST_CODE = 14;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,6 +115,49 @@ public class RegisterRestaurant extends DaggerAppCompatActivity {
         setRestaurantTimings();
         signUp();
 
+        getLocation();
+
+    }
+
+
+    private boolean getLocation() {
+        try {
+            mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+            mFusedLocationClient.getLastLocation()
+                    .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                        @Override
+                        public void onSuccess(Location location) {
+                            // Got last known location. In some rare situations this can be null.
+                            if (location != null) {
+                                lastLocation = location;
+                                Toast.makeText(RegisterRestaurant.this, "Location available", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    });
+            locationRequest = LocationRequest.create();
+            locationRequest.setInterval(5000);
+            locationRequest.setFastestInterval(1000);
+            locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+
+            mLocationCallback = new LocationCallback() {
+                @Override
+                public void onLocationResult(LocationResult locationResult) {
+                    for (Location location : locationResult.getLocations()) {
+                        lastLocation = location;
+                        Toast.makeText(RegisterRestaurant.this,
+                                "Location " + location.getLongitude()+":" + location.getLatitude(),
+                                Toast.LENGTH_LONG).show();
+                    }
+                }
+
+                ;
+            };
+        } catch (SecurityException ex) {
+            ex.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     private void signUp() {
@@ -103,27 +177,41 @@ public class RegisterRestaurant extends DaggerAppCompatActivity {
             Pattern pattern = Pattern.compile(regex);
             Matcher matcher = pattern.matcher(email);
 
-            if((email.isEmpty() || email.equals("")) ||
+            if ((email.isEmpty() || email.equals("")) ||
                     (password.isEmpty() || password.equals("")) ||
                     (contact.isEmpty() || contact.equals("")) ||
                     (address.isEmpty() || address.equals(""))
             ) {
                 showMessage("Any of the field cannot be empty");
-            }else if(!matcher.matches()){
+            } else if (!matcher.matches()) {
                 showMessage("Enter valid E-Mail");
-            }else{
+            } else {
                 register(email, password, contact, address);
             }
         });
     }
 
     private void register(String email, String password, String contact, String address) {
-        Restaurant restaurant = new Restaurant(email, password, contact, address,
-                null, null, ""+startHour, ""+startMinute,
-                ""+endHour, ""+endMinute, offDays);
+        String lat;
+        String lang;
+        Restaurant restaurant;
+
+        if (lastLocation != null) {
+            lat = "" + lastLocation.getLatitude();
+            lang = "" + lastLocation.getLongitude();
+
+            restaurant = new Restaurant(email, password, contact, address,
+                    lat, lang, "" + startHour, "" + startMinute,
+                    "" + endHour, "" + endMinute, offDays);
+        } else {
+            restaurant = new Restaurant(email, password, contact, address,
+                    null, null, "" + startHour, "" + startMinute,
+                    "" + endHour, "" + endMinute, offDays);
+        }
+
         FirebaseRequestListener<String> listener = (s -> {
             showMessage(s);
-            if(s.equals(Constants.FIREBASE_SUCCESS)){
+            if (s.equals(Constants.FIREBASE_SUCCESS)) {
                 SharedPrefUtil sharedPrefUtil = new SharedPrefUtil(RegisterRestaurant.this);
                 sharedPrefUtil.saveCredentials(contact);
                 sharedPrefUtil.saveType(AuthActivity.INTENT_MESSAGE_AUTH_TYPE_RESTAURANT);
@@ -253,4 +341,172 @@ public class RegisterRestaurant extends DaggerAppCompatActivity {
                 Snackbar.LENGTH_SHORT)
                 .show();
     }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        if (!checkPermissions()) {
+            startLocationUpdates();
+            requestPermissions();
+        } else {
+            getLastLocation();
+            startLocationUpdates();
+        }
+    }
+
+    @Override
+    public void onPause() {
+        stopLocationUpdates();
+        super.onPause();
+    }
+
+    private boolean checkPermissions() {
+        int permissionState = ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_COARSE_LOCATION);
+        return permissionState == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private void startLocationPermissionRequest() {
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
+                REQUEST_PERMISSIONS_REQUEST_CODE);
+    }
+
+
+    private void requestPermissions() {
+        boolean shouldProvideRationale =
+                ActivityCompat.shouldShowRequestPermissionRationale(this,
+                        Manifest.permission.ACCESS_COARSE_LOCATION);
+
+        // Provide an additional rationale to the user. This would happen if the user denied the
+        // request previously, but didn't check the "Don't ask again" checkbox.
+        if (shouldProvideRationale) {
+            Log.i(TAG, "Displaying permission rationale to provide additional context.");
+
+            showSnackbar(
+                    R.string.permission_denied_explanation, android.R.string.ok,
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            // Request permission
+                            startLocationPermissionRequest();
+                        }
+                    });
+
+        } else {
+            Log.i(TAG, "Requesting permission");
+            // Request permission. It's possible this can be auto answered if device policy
+            // sets the permission in a given state or the user denied the permission
+            // previously and checked "Never ask again".
+            startLocationPermissionRequest();
+        }
+    }
+
+    /**
+     * Callback received when a permissions request has been completed.
+     */
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        Log.i(TAG, "onRequestPermissionResult");
+        if (requestCode == REQUEST_PERMISSIONS_REQUEST_CODE) {
+            if (grantResults.length <= 0) {
+                // If user interaction was interrupted, the permission request is cancelled and you
+                // receive empty arrays.
+                Log.i(TAG, "User interaction was cancelled.");
+            } else if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission granted.
+                getLastLocation();
+            } else {
+                // Permission denied.
+
+                // Notify the user via a SnackBar that they have rejected a core permission for the
+                // app, which makes the Activity useless. In a real app, core permissions would
+                // typically be best requested during a welcome-screen flow.
+
+                // Additionally, it is important to remember that a permission might have been
+                // rejected without asking the user for permission (device policy or "Never ask
+                // again" prompts). Therefore, a user interface affordance is typically implemented
+                // when permissions are denied. Otherwise, your app could appear unresponsive to
+                // touches or interactions which have required permissions.
+                showSnackbar(R.string.permission_denied_explanation, R.string.settings,
+                        new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                // Build intent that displays the App settings screen.
+                                Intent intent = new Intent();
+                                intent.setAction(
+                                        Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                                Uri uri = Uri.fromParts("package",
+                                        BuildConfig.APPLICATION_ID, null);
+                                intent.setData(uri);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
+                            }
+                        });
+            }
+        }
+    }
+
+
+    /**
+     * Provides a simple way of getting a device's location and is well suited for
+     * applications that do not require a fine-grained location and that do not need location
+     * updates. Gets the best and most recent location currently available, which may be null
+     * in rare cases when a location is not available.
+     * <p>
+     * Note: this method should be called after location permission has been granted.
+     */
+    @SuppressWarnings("MissingPermission")
+    private void getLastLocation() {
+        mFusedLocationClient.getLastLocation()
+                .addOnCompleteListener(this, new OnCompleteListener<Location>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Location> task) {
+                        if (task.isSuccessful() && task.getResult() != null) {
+                            lastLocation = task.getResult();
+
+                          //  txtLatitude.setText(String.valueOf(lastLocation.getLatitude()));
+                           // txtLongitude.setText(String.valueOf(lastLocation.getLongitude()));
+
+                        } else {
+                            Log.w(TAG, "getLastLocation:exception", task.getException());
+                            showMessage("Cannot detect location");
+
+                        }
+                    }
+                });
+    }
+
+    private void stopLocationUpdates() {
+        mFusedLocationClient.removeLocationUpdates(mLocationCallback);
+    }
+
+    private void startLocationUpdates() {
+        if (ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) !=
+                        PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        mFusedLocationClient.requestLocationUpdates(locationRequest, mLocationCallback, null);
+    }
+
+    private void showSnackbar(final int mainTextStringId, final int actionStringId,
+                              View.OnClickListener listener) {
+        Snackbar.make(this.findViewById(android.R.id.content),
+                getString(mainTextStringId),
+                Snackbar.LENGTH_INDEFINITE)
+                .setAction(getString(actionStringId), listener).show();
+    }
+
 }
