@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical">
 
     <TextView
@@ -13,7 +13,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:text="Add Menu"
+        android:text="Add Table"
         android:textColor="@android:color/primary_text_light"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -28,8 +28,8 @@
         android:layout_marginTop="32dp"
         android:layout_marginEnd="16dp"
         android:ems="10"
-        android:hint="Menu Name"
-        android:inputType="textPersonName"
+        android:hint="Table Size"
+        android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_addTableDailog_title" />
@@ -40,35 +40,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:ems="10"
-        android:inputType="numberDecimal"
-        android:hint="Price in Rupees"
+        android:hint="This size table count"
+        android:inputType="number"
         app:layout_constraintEnd_toEndOf="@+id/editText_addTableDialog_tableSize"
         app:layout_constraintStart_toStartOf="@+id/editText_addTableDialog_tableSize"
         app:layout_constraintTop_toBottomOf="@+id/editText_addTableDialog_tableSize" />
-
-    <RadioGroup
-        android:id="@+id/radioGroup_menuType"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="@+id/editMenu_addTableDialog_tableCount"
-        app:layout_constraintStart_toStartOf="@+id/editMenu_addTableDialog_tableCount"
-        app:layout_constraintTop_toBottomOf="@+id/editMenu_addTableDialog_tableCount">
-
-        <RadioButton
-            android:id="@+id/radioVeg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checked="true"
-            android:text="Veg" />
-
-        <RadioButton
-            android:id="@+id/radioNonVeg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Non Veg" />
-    </RadioGroup>
 
     <Button
         android:id="@+id/button_addTableDialog_add"
@@ -76,19 +52,17 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Add"
-        app:layout_constraintEnd_toEndOf="@+id/radioGroup_menuType"
+        app:layout_constraintEnd_toEndOf="@+id/editMenu_addTableDialog_tableCount"
         app:layout_constraintStart_toEndOf="@+id/button_addTableDialog_cancel"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup_menuType" />
+        app:layout_constraintTop_toBottomOf="@+id/editMenu_addTableDialog_tableCount" />
 
     <Button
         android:id="@+id/button_addTableDialog_cancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
         android:text="Cancel"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/button_addTableDialog_add"
-        app:layout_constraintStart_toStartOf="@+id/radioGroup_menuType"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup_menuType" />
+        app:layout_constraintStart_toStartOf="@+id/editMenu_addTableDialog_tableCount"
+        app:layout_constraintTop_toBottomOf="@+id/editMenu_addTableDialog_tableCount" />
 </androidx.constraintlayout.widget.ConstraintLayout>

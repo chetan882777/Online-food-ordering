@@ -4,7 +4,6 @@ package com.example.github.ui.restaurant.menu;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Adapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
@@ -16,8 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.github.R;
 import com.example.github.firebase.FirebaseRequestListener;
 import com.example.github.model.Menu;
-import com.example.github.ui.auth.registrationRestaurant.RegisterRestaurantViewModel;
 import com.example.github.ui.main.ViewModelProviderFactory;
+import com.example.github.ui.restaurant.table.TableActivity;
 import com.example.github.util.Constants;
 import com.example.github.util.SharedPrefUtil;
 import com.google.android.material.snackbar.Snackbar;
@@ -48,6 +47,7 @@ public class MenuActivity extends DaggerAppCompatActivity {
     @Inject
     ViewModelProviderFactory providerFactory;
     MenuViewModel viewModel;
+    private String msg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,12 +55,12 @@ public class MenuActivity extends DaggerAppCompatActivity {
         setContentView(R.layout.activity_menu);
 
         Intent intent = getIntent();
-        String msg = intent.getStringExtra(INTENT_MENU_MSG);
+        msg = intent.getStringExtra(INTENT_MENU_MSG);
 
         viewModel = ViewModelProviders.of(this, providerFactory).get(MenuViewModel.class);
 
-        addMenuButton = findViewById(R.id.button_addMenu);
-        saveMenuButton = findViewById(R.id.button_addMenu_save);
+        addMenuButton = findViewById(R.id.button_addTable);
+        saveMenuButton = findViewById(R.id.button_addTable_save);
         setAdapter();
         setSaveMenu();
 
@@ -79,7 +79,11 @@ public class MenuActivity extends DaggerAppCompatActivity {
             FirebaseRequestListener<String> listener = data -> {
                 showMessage(data);
                 if(data.equals(Constants.FIREBASE_SUCCESS)){
-
+                    if(msg.equals(MENU_FRESH_ADD)) {
+                        Intent intent = new Intent(MenuActivity.this, TableActivity.class);
+                        intent.putExtra(TableActivity.INTENT_TABLE_MSG, TableActivity.TABLE_FRESH_ADD);
+                        startActivity(intent);
+                    }
                 }
             };
 
@@ -97,11 +101,11 @@ public class MenuActivity extends DaggerAppCompatActivity {
             dialog.setTitle("Add Menu");
             RadioGroup radioGroup = dialog.findViewById(R.id.radioGroup_menuType);
 
-            Button add = dialog.findViewById(R.id.button_addMenuDialog_add);
-            Button cancel = dialog.findViewById(R.id.button_addMenuDialog_cancel);
+            Button add = dialog.findViewById(R.id.button_addTableDialog_add);
+            Button cancel = dialog.findViewById(R.id.button_addTableDialog_cancel);
 
-            EditText menuName = dialog.findViewById(R.id.editText_addMenuDialog_menuName);
-            EditText menuPrice = dialog.findViewById(R.id.editMenu_addMenuDialog_menuPrice);
+            EditText menuName = dialog.findViewById(R.id.editText_addTableDialog_tableSize);
+            EditText menuPrice = dialog.findViewById(R.id.editMenu_addTableDialog_tableCount);
 
             add.setOnClickListener(v2 -> {
                 setValueToList(radioGroup, menuName, menuPrice);
@@ -139,7 +143,7 @@ public class MenuActivity extends DaggerAppCompatActivity {
     }
 
     private void setAdapter() {
-        menuRecyclerView = findViewById(R.id.menu_recyclerView);
+        menuRecyclerView = findViewById(R.id.table_recyclerView);
 
         menuAdapter = new MenuAdapter(this, menuList, v -> {
             int itemPosition = menuRecyclerView.getChildLayoutPosition(v);
