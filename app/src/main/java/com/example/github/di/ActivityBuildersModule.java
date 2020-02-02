@@ -6,11 +6,13 @@ import com.example.github.di.auth.RegisterUser.RegisterUserViewModelModule;
 import com.example.github.di.main.MainFragmentBuildersModule;
 import com.example.github.di.main.MainModule;
 import com.example.github.di.main.MainViewModelModule;
+import com.example.github.di.restaurant.menu.MenuViewModelModule;
 import com.example.github.ui.TypeActivity;
 import com.example.github.ui.auth.AuthActivity;
 import com.example.github.ui.auth.registrationRestaurant.RegisterRestaurant;
 import com.example.github.ui.auth.registrationUser.RegistrationUser;
 import com.example.github.ui.main.MainActivity;
+import com.example.github.ui.restaurant.menu.MenuActivity;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -57,5 +59,13 @@ public abstract class ActivityBuildersModule {
             }
     )
     abstract RegisterRestaurant contributeRegisterRestaurantActivity();
+
+
+    @ContributesAndroidInjector(
+            modules = {
+                    MenuViewModelModule.class,
+            }
+    )
+    abstract MenuActivity contributeMenuActivity();
 
 }

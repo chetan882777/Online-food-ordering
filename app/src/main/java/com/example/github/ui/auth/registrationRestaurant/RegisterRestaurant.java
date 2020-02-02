@@ -23,6 +23,7 @@ import com.example.github.ui.auth.AuthActivity;
 import com.example.github.ui.auth.registrationUser.RegisterUserViewModel;
 import com.example.github.ui.auth.registrationUser.RegistrationUser;
 import com.example.github.ui.main.ViewModelProviderFactory;
+import com.example.github.ui.restaurant.menu.MenuActivity;
 import com.example.github.ui.user.home.UserHomeActivity;
 import com.example.github.util.Constants;
 import com.example.github.util.SharedPrefUtil;
@@ -127,7 +128,8 @@ public class RegisterRestaurant extends DaggerAppCompatActivity {
                 sharedPrefUtil.saveCredentials(contact);
                 sharedPrefUtil.saveType(AuthActivity.INTENT_MESSAGE_AUTH_TYPE_RESTAURANT);
 
-                Intent intent = new Intent(this, UserHomeActivity.class);
+                Intent intent = new Intent(this, MenuActivity.class);
+                intent.putExtra(MenuActivity.INTENT_MENU_MSG, MenuActivity.MENU_FRESH_ADD);
                 startActivity(intent);
             }
         });
