@@ -8,8 +8,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
 import com.example.github.R;
 import com.example.github.firebase.FirebaseRequestListener;
@@ -25,6 +27,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import static android.view.View.GONE;
+
 public class TableActivity extends AppCompatActivity {
 
     public static final String INTENT_TABLE_MSG = "INTENT_TABLE_MSG";
@@ -36,6 +40,7 @@ public class TableActivity extends AppCompatActivity {
     private Button saveTableButton;
     private TableAdapter tableAdapter;
     private List<Tables> tableList = new ArrayList<>();
+    private ProgressBar progressBar;
 
     @Inject
     ViewModelProviderFactory providerFactory;
@@ -49,6 +54,10 @@ public class TableActivity extends AppCompatActivity {
         setTitle("Add Tables");
         Intent intent = getIntent();
         String msg = intent.getStringExtra(INTENT_TABLE_MSG);
+
+
+        progressBar = findViewById(R.id.progressBar);
+        progressBar.setVisibility(GONE);
 
         viewModel = ViewModelProviders.of(this, providerFactory).get(TableViewModel.class);
 
@@ -69,7 +78,10 @@ public class TableActivity extends AppCompatActivity {
     private void setSaveTable() {
         saveTableButton.setOnClickListener(v -> {
 
+            progressBar.setVisibility(View.VISIBLE);
             FirebaseRequestListener<String> listener = data -> {
+
+                progressBar.setVisibility(GONE);
                 showMessage(data);
                 if(data.equals(Constants.FIREBASE_SUCCESS)){
                     Intent intent = new Intent(TableActivity.this, RestaurantHomeActivity.class);

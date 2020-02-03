@@ -4,8 +4,10 @@ package com.example.github.ui.restaurant.menu;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 
 import androidx.lifecycle.ViewModelProviders;
@@ -28,6 +30,8 @@ import javax.inject.Inject;
 
 import dagger.android.support.DaggerAppCompatActivity;
 
+import static android.view.View.GONE;
+
 public class MenuActivity extends DaggerAppCompatActivity {
 
 
@@ -43,6 +47,7 @@ public class MenuActivity extends DaggerAppCompatActivity {
     private Button saveMenuButton;
     private MenuAdapter menuAdapter;
     private List<Menu> menuList = new ArrayList<>();
+    private ProgressBar progressBar;
 
     @Inject
     ViewModelProviderFactory providerFactory;
@@ -60,6 +65,9 @@ public class MenuActivity extends DaggerAppCompatActivity {
 
         viewModel = ViewModelProviders.of(this, providerFactory).get(MenuViewModel.class);
 
+        progressBar = findViewById(R.id.progressBar);
+        progressBar.setVisibility(GONE);
+
         addMenuButton = findViewById(R.id.button_addTable);
         saveMenuButton = findViewById(R.id.button_addTable_save);
         setAdapter();
@@ -76,8 +84,10 @@ public class MenuActivity extends DaggerAppCompatActivity {
 
     private void setSaveMenu() {
         saveMenuButton.setOnClickListener(v -> {
+            progressBar.setVisibility(View.VISIBLE);
 
             FirebaseRequestListener<String> listener = data -> {
+                progressBar.setVisibility(GONE);
                 showMessage(data);
                 if(data.equals(Constants.FIREBASE_SUCCESS)){
                     if(msg.equals(MENU_FRESH_ADD)) {

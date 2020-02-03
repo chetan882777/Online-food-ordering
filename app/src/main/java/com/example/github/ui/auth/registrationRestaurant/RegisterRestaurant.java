@@ -18,6 +18,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -87,6 +88,7 @@ public class RegisterRestaurant extends DaggerAppCompatActivity {
     private EditText editTextPassword;
     private EditText editTextContact;
     private EditText editTextAddress;
+    private ProgressBar progressBar;
 
     private Button nextButton;
 
@@ -108,6 +110,8 @@ public class RegisterRestaurant extends DaggerAppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_restaurant);
 
+        progressBar = findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.GONE);
         viewModel = ViewModelProviders.of(this, providerFactory).get(RegisterRestaurantViewModel.class);
 
         setOffDays();
@@ -166,7 +170,9 @@ public class RegisterRestaurant extends DaggerAppCompatActivity {
 
         nextButton.setOnClickListener(v -> {
 
+            progressBar.setVisibility(View.VISIBLE);
             if(lastLocation == null){
+                progressBar.setVisibility(View.GONE);
                 showMessage("location is required");
                 return;
             }
@@ -213,6 +219,7 @@ public class RegisterRestaurant extends DaggerAppCompatActivity {
         }
 
         FirebaseRequestListener<String> listener = (s -> {
+            progressBar.setVisibility(View.GONE);
             showMessage(s);
             if (s.equals(Constants.FIREBASE_SUCCESS)) {
                 SharedPrefUtil sharedPrefUtil = new SharedPrefUtil(RegisterRestaurant.this);
