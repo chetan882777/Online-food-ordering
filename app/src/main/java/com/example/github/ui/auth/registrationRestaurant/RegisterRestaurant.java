@@ -144,9 +144,6 @@ public class RegisterRestaurant extends DaggerAppCompatActivity {
                 public void onLocationResult(LocationResult locationResult) {
                     for (Location location : locationResult.getLocations()) {
                         lastLocation = location;
-                        Toast.makeText(RegisterRestaurant.this,
-                                "Location " + location.getLongitude()+":" + location.getLatitude(),
-                                Toast.LENGTH_LONG).show();
                     }
                 }
 
@@ -168,6 +165,12 @@ public class RegisterRestaurant extends DaggerAppCompatActivity {
         editTextAddress = findViewById(R.id.editText_regResAddress);
 
         nextButton.setOnClickListener(v -> {
+
+            if(lastLocation == null){
+                showMessage("location is required");
+                return;
+            }
+
             String email = editTextEmail.getText().toString();
             String password = editTextPassword.getText().toString();
             String contact = editTextContact.getText().toString();

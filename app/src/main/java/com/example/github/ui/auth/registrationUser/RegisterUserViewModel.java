@@ -36,11 +36,9 @@ public class RegisterUserViewModel extends ViewModel {
         this.repository = repository;
     }
 
-    public void register(String email, String password, String contact, String address, FirebaseRequestListener<String> listener){
+    public void register(User user, FirebaseRequestListener<String> listener){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference userRef = database.getReference("user/" + contact);
-
-        User user = new User(email, password, contact, address, null, null);
+        DatabaseReference userRef = database.getReference("user/" + user.getContact());
 
         userRef.setValue(user).addOnCompleteListener(task -> {
             Log.d(TAG, "onComplete: successful");
