@@ -15,13 +15,14 @@ public class Restaurant {
     private String endHour;
     private String endMinute;
     private List<String> offDays;
+    private String city;
 
     public Restaurant() {
     }
 
     public Restaurant(String email, String password, String contact, String address, String lat,
                       String lang, String startHour, String startMinute, String endHour,
-                      String endMinute, List<String> offDays) {
+                      String endMinute, List<String> offDays, String city) {
         this.email = email;
         this.password = password;
         this.contact = contact;
@@ -33,6 +34,15 @@ public class Restaurant {
         this.endHour = endHour;
         this.endMinute = endMinute;
         this.offDays = offDays;
+        this.city = city;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public String getEmail() {

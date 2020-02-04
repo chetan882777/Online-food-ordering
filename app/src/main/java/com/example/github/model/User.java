@@ -8,16 +8,26 @@ public class User {
     private String address;
     private String lat;
     private String lang;
+    private String city;
 
     public User(){}
 
-    public User(String email, String password, String contact, String address, String lat, String lang) {
+    public User(String email, String password, String contact, String address, String lat, String lang, String city) {
         this.email = email;
         this.password = password;
         this.contact = contact;
         this.address = address;
         this.lat = lat;
         this.lang = lang;
+        this.city = city;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public String getEmail() {

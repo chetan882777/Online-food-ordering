@@ -211,11 +211,11 @@ public class RegisterRestaurant extends DaggerAppCompatActivity {
 
             restaurant = new Restaurant(email, password, contact, address,
                     lat, lang, "" + startHour, "" + startMinute,
-                    "" + endHour, "" + endMinute, offDays);
+                    "" + endHour, "" + endMinute, offDays, "Indore");
         } else {
             restaurant = new Restaurant(email, password, contact, address,
                     null, null, "" + startHour, "" + startMinute,
-                    "" + endHour, "" + endMinute, offDays);
+                    "" + endHour, "" + endMinute, offDays, "Indore");
         }
 
         FirebaseRequestListener<String> listener = (s -> {

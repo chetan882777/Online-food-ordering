@@ -144,9 +144,9 @@ public class RegistrationUser extends DaggerAppCompatActivity {
         User user;
         if (lastLocation != null) {
             user = new User(email, password, contact, address,
-                    "" + lastLocation.getLatitude(), "" + lastLocation.getLongitude());
+                    "" + lastLocation.getLatitude(), "" + lastLocation.getLongitude(), "Indore");
         } else {
-            user = new User(email, password, contact, address, null, null);
+            user = new User(email, password, contact, address, null, null, "Indore");
         }
         FirebaseRequestListener<String> listener = data -> {
             showMessage(data);
