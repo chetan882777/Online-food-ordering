@@ -88,6 +88,7 @@ public class RegisterRestaurant extends DaggerAppCompatActivity {
     private EditText editTextPassword;
     private EditText editTextContact;
     private EditText editTextAddress;
+    private EditText editTextName;
     private ProgressBar progressBar;
 
     private Button nextButton;
@@ -167,6 +168,7 @@ public class RegisterRestaurant extends DaggerAppCompatActivity {
         editTextPassword = findViewById(R.id.editText_regResPassword);
         editTextContact = findViewById(R.id.editText_regResContact);
         editTextAddress = findViewById(R.id.editText_regResAddress);
+        editTextName = findViewById(R.id.editText_regResName);
 
         nextButton.setOnClickListener(v -> {
 
@@ -181,6 +183,7 @@ public class RegisterRestaurant extends DaggerAppCompatActivity {
             String password = editTextPassword.getText().toString();
             String contact = editTextContact.getText().toString();
             String address = editTextAddress.getText().toString();
+            String name = editTextName.getText().toString();
 
             String regex = "^(.+)@(.+)$";
             Pattern pattern = Pattern.compile(regex);
@@ -189,18 +192,19 @@ public class RegisterRestaurant extends DaggerAppCompatActivity {
             if ((email.isEmpty() || email.equals("")) ||
                     (password.isEmpty() || password.equals("")) ||
                     (contact.isEmpty() || contact.equals("")) ||
-                    (address.isEmpty() || address.equals(""))
+                    (address.isEmpty() || address.equals("")) ||
+                    (name.isEmpty() || name.equals(""))
             ) {
                 showMessage("Any of the field cannot be empty");
             } else if (!matcher.matches()) {
                 showMessage("Enter valid E-Mail");
             } else {
-                register(email, password, contact, address);
+                register(name, email, password, contact, address);
             }
         });
     }
 
-    private void register(String email, String password, String contact, String address) {
+    private void register(String name, String email, String password, String contact, String address) {
         String lat;
         String lang;
         Restaurant restaurant;
@@ -209,11 +213,11 @@ public class RegisterRestaurant extends DaggerAppCompatActivity {
             lat = "" + lastLocation.getLatitude();
             lang = "" + lastLocation.getLongitude();
 
-            restaurant = new Restaurant(email, password, contact, address,
+            restaurant = new Restaurant(name, email, password, contact, address,
                     lat, lang, "" + startHour, "" + startMinute,
                     "" + endHour, "" + endMinute, offDays, "Indore");
         } else {
-            restaurant = new Restaurant(email, password, contact, address,
+            restaurant = new Restaurant(name, email, password, contact, address,
                     null, null, "" + startHour, "" + startMinute,
                     "" + endHour, "" + endMinute, offDays, "Indore");
         }

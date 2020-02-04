@@ -16,13 +16,15 @@ public class Restaurant {
     private String endMinute;
     private List<String> offDays;
     private String city;
+    private String name;
 
     public Restaurant() {
     }
 
-    public Restaurant(String email, String password, String contact, String address, String lat,
+    public Restaurant(String name, String email, String password, String contact, String address, String lat,
                       String lang, String startHour, String startMinute, String endHour,
                       String endMinute, List<String> offDays, String city) {
+        this.name = name;
         this.email = email;
         this.password = password;
         this.contact = contact;
@@ -35,6 +37,14 @@ public class Restaurant {
         this.endMinute = endMinute;
         this.offDays = offDays;
         this.city = city;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getCity() {
@@ -131,5 +141,23 @@ public class Restaurant {
 
     public void setOffDays(List<String> offDays) {
         this.offDays = offDays;
+    }
+
+    @Override
+    public String toString() {
+        return "Restaurant{" +
+                "email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", contact='" + contact + '\'' +
+                ", address='" + address + '\'' +
+                ", lat='" + lat + '\'' +
+                ", lang='" + lang + '\'' +
+                ", startHour='" + startHour + '\'' +
+                ", startMinute='" + startMinute + '\'' +
+                ", endHour='" + endHour + '\'' +
+                ", endMinute='" + endMinute + '\'' +
+                ", offDays=" + offDays +
+                ", city='" + city + '\'' +
+                '}';
     }
 }

@@ -38,4 +38,13 @@ public class Tables {
     public void setTableCount(String tableCount) {
         this.tableCount = tableCount;
     }
+
+    @Override
+    public String toString() {
+        return "Tables{" +
+                "tableName='" + tableName + '\'' +
+                ", tableSize='" + tableSize + '\'' +
+                ", tableCount='" + tableCount + '\'' +
+                '}';
+    }
 }

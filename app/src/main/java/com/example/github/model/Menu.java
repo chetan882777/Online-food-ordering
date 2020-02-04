@@ -38,4 +38,13 @@ public class Menu {
     public void setType(String type) {
         this.type = type;
     }
+
+    @Override
+    public String toString() {
+        return "Menu{" +
+                "name='" + name + '\'' +
+                ", price='" + price + '\'' +
+                ", type='" + type + '\'' +
+                '}';
+    }
 }

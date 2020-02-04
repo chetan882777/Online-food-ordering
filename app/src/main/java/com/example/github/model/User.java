@@ -77,4 +77,17 @@ public class User {
     public void setLang(String lang) {
         this.lang = lang;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", contact='" + contact + '\'' +
+                ", address='" + address + '\'' +
+                ", lat='" + lat + '\'' +
+                ", lang='" + lang + '\'' +
+                ", city='" + city + '\'' +
+                '}';
+    }
 }
