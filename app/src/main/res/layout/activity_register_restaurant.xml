@@ -1,199 +1,217 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.auth.registrationRestaurant.RegisterRestaurant">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/textView_resType_activeTimeLabel"
-        android:layout_width="0dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="Restaurant Timing"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/spinner_regRes_resType"
-        app:layout_constraintStart_toStartOf="@+id/textView_resType"
-        app:layout_constraintTop_toBottomOf="@+id/button_regRes_addOffDays" />
+        tools:context=".ui.auth.registrationRestaurant.RegisterRestaurant">
 
-    <TextView
-        android:id="@+id/textView_regRes_activeTimeStart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="11 : 00"
-        android:textSize="16dp"
-        app:layout_constraintEnd_toStartOf="@+id/textView_regRes_activeTimeEnd"
-        app:layout_constraintStart_toStartOf="@+id/textView_resType_activeTimeLabel"
-        app:layout_constraintTop_toBottomOf="@+id/textView_resType_activeTimeLabel" />
+        <TextView
+            android:id="@+id/textView_resType_activeTimeLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="Restaurant Timing"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="@+id/spinner_regRes_resType"
+            app:layout_constraintStart_toStartOf="@+id/textView_resType"
+            app:layout_constraintTop_toBottomOf="@+id/button_regRes_addOffDays" />
 
-    <Button
-        android:id="@+id/button_regRes_activeTimesStart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Set opening time"
-        app:layout_constraintEnd_toEndOf="@+id/textView_regRes_activeTimeStart"
-        app:layout_constraintHorizontal_bias="0.8"
-        app:layout_constraintStart_toStartOf="@+id/textView_regRes_activeTimeStart"
-        app:layout_constraintTop_toBottomOf="@+id/textView_regRes_activeTimeStart" />
+        <TextView
+            android:id="@+id/textView_regRes_activeTimeStart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="11 : 00"
+            android:textSize="16dp"
+            app:layout_constraintEnd_toStartOf="@+id/textView_regRes_activeTimeEnd"
+            app:layout_constraintStart_toStartOf="@+id/textView_resType_activeTimeLabel"
+            app:layout_constraintTop_toBottomOf="@+id/textView_resType_activeTimeLabel" />
 
-    <TextView
-        android:id="@+id/textView_resType_oggDaysLabel"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="Off Days"
-        android:textAlignment="center"
-        android:textSize="20dp"
-        app:layout_constraintEnd_toEndOf="@+id/spinner_regRes_resType"
-        app:layout_constraintStart_toStartOf="@+id/textView_resType"
-        app:layout_constraintTop_toBottomOf="@+id/textView_resType" />
+        <Button
+            android:id="@+id/button_regRes_activeTimesStart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Set opening time"
+            app:layout_constraintEnd_toEndOf="@+id/textView_regRes_activeTimeStart"
+            app:layout_constraintHorizontal_bias="0.8"
+            app:layout_constraintStart_toStartOf="@+id/textView_regRes_activeTimeStart"
+            app:layout_constraintTop_toBottomOf="@+id/textView_regRes_activeTimeStart" />
 
-    <TextView
-        android:id="@+id/textView_regRes_noOffDays"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="0"
-        android:textSize="16dp"
-        app:layout_constraintEnd_toEndOf="@+id/textView_resType_oggDaysLabel"
-        app:layout_constraintHorizontal_bias="0.511"
-        app:layout_constraintStart_toStartOf="@+id/textView_resType_oggDaysLabel"
-        app:layout_constraintTop_toBottomOf="@+id/textView_resType_oggDaysLabel" />
+        <TextView
+            android:id="@+id/textView_resType_oggDaysLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="Off Days"
+            android:textAlignment="center"
+            android:textSize="20dp"
+            app:layout_constraintEnd_toEndOf="@+id/spinner_regRes_resType"
+            app:layout_constraintStart_toStartOf="@+id/textView_resType"
+            app:layout_constraintTop_toBottomOf="@+id/textView_resType" />
 
-    <EditText
-        android:id="@+id/editText_regResEmail"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:ems="10"
-        android:hint="E-Mail"
-        android:inputType="textEmailAddress"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/textView_regRes_noOffDays"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="0"
+            android:textSize="16dp"
+            app:layout_constraintEnd_toEndOf="@+id/textView_resType_oggDaysLabel"
+            app:layout_constraintHorizontal_bias="0.511"
+            app:layout_constraintStart_toStartOf="@+id/textView_resType_oggDaysLabel"
+            app:layout_constraintTop_toBottomOf="@+id/textView_resType_oggDaysLabel" />
 
-    <EditText
-        android:id="@+id/editText_regResPassword"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:ems="10"
-        android:hint="Password"
-        android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="@+id/editText_regResEmail"
-        app:layout_constraintStart_toStartOf="@+id/editText_regResEmail"
-        app:layout_constraintTop_toBottomOf="@+id/editText_regResEmail" />
+        <EditText
+            android:id="@+id/editText_regResEmail"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:ems="10"
+            android:hint="E-Mail"
+            android:inputType="textEmailAddress"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView_resReg_res" />
 
-    <EditText
-        android:id="@+id/editText_regResContact"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:ems="10"
-        android:hint="Contact"
-        android:inputType="phone"
-        app:layout_constraintEnd_toEndOf="@+id/editText_regResPassword"
-        app:layout_constraintStart_toStartOf="@+id/editText_regResPassword"
-        app:layout_constraintTop_toBottomOf="@+id/editText_regResPassword" />
+        <EditText
+            android:id="@+id/editText_regResPassword"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:ems="10"
+            android:hint="Password"
+            android:inputType="textPassword"
+            app:layout_constraintEnd_toEndOf="@+id/editText_regResEmail"
+            app:layout_constraintStart_toStartOf="@+id/editText_regResEmail"
+            app:layout_constraintTop_toBottomOf="@+id/editText_regResEmail" />
 
-    <EditText
-        android:id="@+id/editText_regResAddress"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:ems="10"
-        android:hint="Address"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="@+id/editText_regResContact"
-        app:layout_constraintStart_toStartOf="@+id/editText_regResContact"
-        app:layout_constraintTop_toBottomOf="@+id/editText_regResContact" />
+        <EditText
+            android:id="@+id/editText_regResContact"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:ems="10"
+            android:hint="Contact"
+            android:inputType="phone"
+            app:layout_constraintEnd_toEndOf="@+id/editText_regResPassword"
+            app:layout_constraintStart_toStartOf="@+id/editText_regResPassword"
+            app:layout_constraintTop_toBottomOf="@+id/editText_regResPassword" />
 
-    <Spinner
-        android:id="@+id/spinner_regRes_resType"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/textView_resType"
-        app:layout_constraintEnd_toEndOf="@+id/editText_regResAddress"
-        app:layout_constraintStart_toEndOf="@+id/textView_resType"
-        app:layout_constraintTop_toTopOf="@+id/textView_resType" />
+        <EditText
+            android:id="@+id/editText_regResAddress"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:ems="10"
+            android:hint="Address"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="@+id/editText_regResContact"
+            app:layout_constraintStart_toStartOf="@+id/editText_regResContact"
+            app:layout_constraintTop_toBottomOf="@+id/editText_regResContact" />
 
-    <TextView
-        android:id="@+id/textView_resType"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="Restaurant type"
-        android:textSize="20dp"
-        app:layout_constraintEnd_toStartOf="@+id/spinner_regRes_resType"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/editText_regResAddress"
-        app:layout_constraintTop_toBottomOf="@+id/editText_regResName" />
+        <Spinner
+            android:id="@+id/spinner_regRes_resType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/textView_resType"
+            app:layout_constraintEnd_toEndOf="@+id/editText_regResAddress"
+            app:layout_constraintStart_toEndOf="@+id/textView_resType"
+            app:layout_constraintTop_toTopOf="@+id/textView_resType" />
 
-    <Button
-        android:id="@+id/button_regRes_addOffDays"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Add Off Days"
-        app:layout_constraintEnd_toEndOf="@+id/textView_regRes_noOffDays"
-        app:layout_constraintStart_toStartOf="@+id/textView_regRes_noOffDays"
-        app:layout_constraintTop_toBottomOf="@+id/textView_regRes_noOffDays" />
+        <TextView
+            android:id="@+id/textView_resType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="Restaurant type"
+            android:textSize="20dp"
+            app:layout_constraintEnd_toStartOf="@+id/spinner_regRes_resType"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/editText_regResAddress"
+            app:layout_constraintTop_toBottomOf="@+id/editText_regResName" />
 
-    <TextView
-        android:id="@+id/textView_regRes_activeTimeEnd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="23 : 00"
-        app:layout_constraintEnd_toEndOf="@+id/textView_resType_activeTimeLabel"
-        app:layout_constraintStart_toEndOf="@+id/textView_regRes_activeTimeStart"
-        app:layout_constraintTop_toTopOf="@+id/textView_regRes_activeTimeStart" />
+        <Button
+            android:id="@+id/button_regRes_addOffDays"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Add Off Days"
+            app:layout_constraintEnd_toEndOf="@+id/textView_regRes_noOffDays"
+            app:layout_constraintStart_toStartOf="@+id/textView_regRes_noOffDays"
+            app:layout_constraintTop_toBottomOf="@+id/textView_regRes_noOffDays" />
 
-    <Button
-        android:id="@+id/button_regRes_activeTimesEnd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Set closing time"
-        app:layout_constraintEnd_toEndOf="@+id/textView_regRes_activeTimeEnd"
-        app:layout_constraintHorizontal_bias="0.2"
-        app:layout_constraintStart_toStartOf="@+id/textView_regRes_activeTimeEnd"
-        app:layout_constraintTop_toBottomOf="@+id/textView_regRes_activeTimeEnd" />
+        <TextView
+            android:id="@+id/textView_regRes_activeTimeEnd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="23 : 00"
+            app:layout_constraintEnd_toEndOf="@+id/textView_resType_activeTimeLabel"
+            app:layout_constraintStart_toEndOf="@+id/textView_regRes_activeTimeStart"
+            app:layout_constraintTop_toTopOf="@+id/textView_regRes_activeTimeStart" />
 
-    <Button
-        android:id="@+id/button_regRes_next"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Next"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        <Button
+            android:id="@+id/button_regRes_activeTimesEnd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Set closing time"
+            app:layout_constraintEnd_toEndOf="@+id/textView_regRes_activeTimeEnd"
+            app:layout_constraintHorizontal_bias="0.2"
+            app:layout_constraintStart_toStartOf="@+id/textView_regRes_activeTimeEnd"
+            app:layout_constraintTop_toBottomOf="@+id/textView_regRes_activeTimeEnd" />
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <Button
+            android:id="@+id/button_regRes_next"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Next"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
-    <EditText
-        android:id="@+id/editText_regResName"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="Restaurant Name"
-        app:layout_constraintEnd_toEndOf="@+id/editText_regResAddress"
-        app:layout_constraintStart_toStartOf="@+id/editText_regResAddress"
-        app:layout_constraintTop_toBottomOf="@+id/editText_regResAddress" />
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <EditText
+            android:id="@+id/editText_regResName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:ems="10"
+            android:hint="Restaurant Name"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="@+id/editText_regResAddress"
+            app:layout_constraintStart_toStartOf="@+id/editText_regResAddress"
+            app:layout_constraintTop_toBottomOf="@+id/editText_regResAddress" />
+
+        <ImageView
+            android:id="@+id/imageView_resReg_res"
+            android:layout_width="0dp"
+            android:layout_height="160dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_menu_camera" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

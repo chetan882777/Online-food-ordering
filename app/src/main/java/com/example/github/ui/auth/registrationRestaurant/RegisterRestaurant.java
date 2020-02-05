@@ -2,9 +2,11 @@ package com.example.github.ui.auth.registrationRestaurant;
 
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -18,6 +20,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -90,6 +93,7 @@ public class RegisterRestaurant extends DaggerAppCompatActivity {
     private EditText editTextAddress;
     private EditText editTextName;
     private ProgressBar progressBar;
+    private ImageView imageViewRestaurant;
 
     private Button nextButton;
 
@@ -104,6 +108,8 @@ public class RegisterRestaurant extends DaggerAppCompatActivity {
     private LocationCallback mLocationCallback;
 
     private static final int REQUEST_PERMISSIONS_REQUEST_CODE = 14;
+    private int MY_CAMERA_PERMISSION_CODE = 123;
+    private int CAMERA_REQUEST = 23;
 
 
     @Override
@@ -122,6 +128,26 @@ public class RegisterRestaurant extends DaggerAppCompatActivity {
 
         getLocation();
 
+        imageViewRestaurant = findViewById(R.id.imageView_resReg_res);
+
+        imageViewRestaurant.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
+                {
+                    requestPermissions(new String[]{Manifest.permission.CAMERA}, MY_CAMERA_PERMISSION_CODE);
+                }
+                else
+                {
+                    Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(cameraIntent, CAMERA_REQUEST);
+                }
+            }
+        });
+
+        viewModel.getRestuarantImageMutableLiveData().observe(this , b ->{
+            imageViewRestaurant.setImageBitmap(b);
+        });
     }
 
 
@@ -461,6 +487,18 @@ public class RegisterRestaurant extends DaggerAppCompatActivity {
                             }
                         });
             }
+        }else if (requestCode == MY_CAMERA_PERMISSION_CODE)
+        {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
+            {
+                Toast.makeText(this, "camera permission granted", Toast.LENGTH_LONG).show();
+                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(cameraIntent, CAMERA_REQUEST);
+            }
+            else
+            {
+                Toast.makeText(this, "camera permission denied", Toast.LENGTH_LONG).show();
+            }
         }
     }
 
@@ -523,4 +561,13 @@ public class RegisterRestaurant extends DaggerAppCompatActivity {
                 .setAction(getString(actionStringId), listener).show();
     }
 
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
+            Bitmap photo = (Bitmap) data.getExtras().get("data");
+            viewModel.setRestaurantImage(photo);
+        }
+    }
 }
